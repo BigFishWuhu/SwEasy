@@ -21,6 +21,8 @@ env:
   MAAFW_VERSION: "v5.14.3"
   MXU_VERSION: "v2.7.1"
   PYTHON_VERSION: "3.12.10"
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: "utf-8"
 
 jobs:
   build:

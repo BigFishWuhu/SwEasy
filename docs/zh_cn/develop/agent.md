@@ -27,14 +27,14 @@ _（本篇为编写基础指引，仅介绍 custom recognition 和 custom action
         "child_exec": "python",
         // 命令的参数
         "child_args": [
-            "./agent/main.py"
+            "../agent/main.py"
         ]
     },
     ...
 }
 ```
 
-若按以上内容进行填写，则通用 UI 在启动时会尝试执行 `python ./agent/main.py`。（CWD为 interface.json 所在目录）
+若按以上内容进行填写，则通用 UI 在启动时会尝试执行 `python ../agent/main.py`。（CWD 为 interface.json 所在目录，因此需要先返回项目根目录。）
 
 ## 内容编写
 

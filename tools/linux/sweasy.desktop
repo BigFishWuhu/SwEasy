@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=SwEasy
+Comment=Summoners War automation with MXU
+Exec=sweasy
+Terminal=false
+Categories=Utility;

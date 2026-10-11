@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "algorithm": "swex-rune-card-1.2.1",
+  "mode": "auto_sell",
+  "preset": "release-defaults",
+  "retention_policy": {
+    "basis": "level_gte_12",
+    "target_percent": 60
+  },
+  "fallback": "sell",
+  "groups": []
+}

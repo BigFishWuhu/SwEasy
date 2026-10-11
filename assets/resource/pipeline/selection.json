@@ -1,0 +1,227 @@
+{
+    "SWCairosOpenRoot": {
+        "action": "Click",
+        "target": [915, 170],
+        "post_delay": 500,
+        "next": [
+            "SWCairosCategory"
+        ],
+        "timeout": 10000
+    },
+    "SWCairosCategory": {
+        "recognition": "TemplateMatch",
+        "template": "selection/cairos/category.png",
+        "roi": [790, 200, 460, 470],
+        "threshold": 0.8,
+        "action": "Click",
+        "post_delay": 800,
+        "next": [
+            "SWCairosResetDungeonList"
+        ],
+        "timeout": 10000
+    },
+    "SWCairosResetDungeonList": {
+        "action": "Swipe",
+        "begin": [350, 240],
+        "end": [350, 640],
+        "duration": 450,
+        "repeat": 5,
+        "repeat_delay": 150,
+        "post_delay": 500,
+        "next": [
+            "SWCairosSelectGiantBase"
+        ]
+    },
+    "SWCairosSelectGiantBase": {
+        "action": "Click",
+        "target": [320, 265],
+        "post_delay": 500,
+        "next": [
+            "SWCairosSelectDungeon"
+        ],
+        "timeout": 1200,
+        "on_error": [
+            "SWCairosScrollDungeonList"
+        ]
+    },
+    "SWCairosSelectDungeon": {
+        "recognition": "TemplateMatch",
+        "template": "selection/cairos/dungeon/giant_selected.png",
+        "roi": [140, 180, 370, 510],
+        "threshold": 0.76,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "SWCairosResetFloorList"
+        ]
+    },
+    "SWCairosScrollDungeonList": {
+        "action": "Swipe",
+        "begin": [350, 610],
+        "end": [350, 250],
+        "duration": 450,
+        "post_delay": 300,
+        "max_hit": 8,
+        "next": [
+            "SWCairosSelectDungeon"
+        ],
+        "timeout": 1200,
+        "on_error": [
+            "SWCairosScrollDungeonList"
+        ]
+    },
+    "SWCairosResetFloorList": {
+        "action": "Swipe",
+        "begin": [800, 240],
+        "end": [800, 650],
+        "duration": 450,
+        "repeat": 5,
+        "repeat_delay": 150,
+        "post_delay": 500,
+        "next": [
+            "SWCairosSelectFloor"
+        ],
+        "timeout": 1200,
+        "on_error": [
+            "SWCairosScrollFloorList"
+        ]
+    },
+    "SWCairosSelectFloor": {
+        "recognition": "TemplateMatch",
+        "template": "selection/cairos/floor/b10.png",
+        "roi": [520, 190, 620, 500],
+        "threshold": 0.95,
+        "action": "Click",
+        "target_offset": [345, -5, -105, 50],
+        "post_delay": 800,
+        "next": [
+            "SWSelectionTeamReady"
+        ]
+    },
+    "SWCairosScrollFloorList": {
+        "action": "Swipe",
+        "begin": [800, 610],
+        "end": [800, 250],
+        "duration": 450,
+        "post_delay": 300,
+        "max_hit": 12,
+        "next": [
+            "SWCairosSelectFloor"
+        ],
+        "timeout": 1200,
+        "on_error": [
+            "SWCairosScrollFloorList"
+        ]
+    },
+    "SWDimensionOpenRoot": {
+        "action": "Click",
+        "target": [1120, 170],
+        "post_delay": 500,
+        "next": [
+            "SWDimensionResetRegionList"
+        ]
+    },
+    "SWDimensionResetRegionList": {
+        "action": "Swipe",
+        "begin": [1030, 240],
+        "end": [1030, 650],
+        "duration": 450,
+        "repeat": 5,
+        "repeat_delay": 150,
+        "post_delay": 500,
+        "next": [
+            "SWDimensionSelectRegion"
+        ],
+        "timeout": 1200,
+        "on_error": [
+            "SWDimensionScrollRegionList"
+        ]
+    },
+    "SWDimensionSelectRegion": {
+        "recognition": "TemplateMatch",
+        "template": "selection/dimension/region/karzhan.png",
+        "roi": [800, 200, 430, 470],
+        "threshold": 0.78,
+        "action": "Click",
+        "post_delay": 800,
+        "next": [
+            "SWDimensionSelectPrimaryDungeon"
+        ]
+    },
+    "SWDimensionScrollRegionList": {
+        "action": "Swipe",
+        "begin": [1030, 610],
+        "end": [1030, 250],
+        "duration": 450,
+        "post_delay": 300,
+        "max_hit": 8,
+        "next": [
+            "SWDimensionSelectRegion"
+        ],
+        "timeout": 1200,
+        "on_error": [
+            "SWDimensionScrollRegionList"
+        ]
+    },
+    "SWDimensionSelectPrimaryDungeon": {
+        "action": "Click",
+        "target": [320, 265],
+        "post_delay": 500,
+        "next": [
+            "SWDimensionResetStageList"
+        ]
+    },
+    "SWDimensionResetStageList": {
+        "action": "Swipe",
+        "begin": [800, 240],
+        "end": [800, 650],
+        "duration": 450,
+        "repeat": 4,
+        "repeat_delay": 150,
+        "post_delay": 500,
+        "next": [
+            "SWDimensionSelectStage"
+        ],
+        "timeout": 1200,
+        "on_error": [
+            "SWDimensionScrollStageList"
+        ]
+    },
+    "SWDimensionSelectStage": {
+        "recognition": "TemplateMatch",
+        "template": "selection/dimension/stage_key/s5.png",
+        "roi": [520, 190, 620, 500],
+        "threshold": 0.95,
+        "action": "Click",
+        "target_offset": [210, 0, 20, 0],
+        "post_delay": 800,
+        "next": [
+            "SWSelectionTeamReady"
+        ]
+    },
+    "SWDimensionScrollStageList": {
+        "action": "Swipe",
+        "begin": [800, 610],
+        "end": [800, 250],
+        "duration": 450,
+        "post_delay": 300,
+        "max_hit": 6,
+        "next": [
+            "SWDimensionSelectStage"
+        ],
+        "timeout": 1200,
+        "on_error": [
+            "SWDimensionScrollStageList"
+        ]
+    },
+    "SWSelectionTeamReady": {
+        "recognition": "TemplateMatch",
+        "template": "selection/common/team_ready.png",
+        "roi": [950, 480, 300, 150],
+        "threshold": 0.8,
+        "focus": {
+            "Node.Action.Succeeded": "已选择目标，等待确认连续战斗"
+        },
+        "timeout": 10000
+    }
+}

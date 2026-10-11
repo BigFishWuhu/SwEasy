@@ -1,0 +1,48 @@
+name: sweasy
+arch: amd64
+platform: linux
+version: ${PACKAGE_VERSION}
+maintainer: SwEasy contributors
+description: Summoners War automation with MXU and MaaFramework
+homepage: https://github.com/BigFishWuhu/SwEasy
+license: MIT AND AGPL-3.0-only AND LGPL-3.0-only
+section: games
+priority: optional
+contents:
+  - src: ./install/
+    dst: /opt/sweasy/
+    type: tree
+  - src: ./tools/linux/sweasy
+    dst: /usr/bin/sweasy
+    file_info:
+      mode: 0755
+  - src: ./tools/linux/sweasy.desktop
+    dst: /usr/share/applications/sweasy.desktop
+overrides:
+  deb:
+    depends:
+      - libc6 (>= 2.39)
+      - libwebkit2gtk-4.1-0
+      - libayatana-appindicator3-1
+      - librsvg2-2
+      - libusb-1.0-0
+      - adb
+      - util-linux
+  rpm:
+    depends:
+      - glibc >= 2.39
+      - webkit2gtk4.1
+      - libappindicator-gtk3
+      - librsvg2
+      - libusb1
+      - android-tools
+      - util-linux
+  archlinux:
+    depends:
+      - glibc>=2.39
+      - webkit2gtk-4.1
+      - libappindicator-gtk3
+      - librsvg
+      - libusb
+      - android-tools
+      - util-linux

@@ -1,0 +1,230 @@
+{
+  "SWRuneOpenWeb": {
+    "recognition": "DirectHit",
+    "action": "Custom",
+    "custom_action": "start_rune_web",
+    "custom_action_param": {"port": 8765, "restart": true},
+    "timeout": 45000,
+    "focus": {
+      "Node.Action.Succeeded": "符文筛选网页已启动或重启，实际访问地址已打印到任务日志"
+    }
+  },
+  "SWRuneStartPreview": {
+    "recognition": "OCR",
+    "roi": [760, 0, 420, 65],
+    "expected": ["符文管理", "符文\\s*[（(][1-6][）)]"],
+    "threshold": 0.2,
+    "next": ["SWRuneScanPreview"],
+    "on_error": ["SWRuneOpenStorage"]
+  },
+  "SWRuneStartAutoSell": {
+    "recognition": "OCR",
+    "roi": [760, 0, 420, 65],
+    "expected": ["符文管理", "符文\\s*[（(][1-6][）)]"],
+    "threshold": 0.2,
+    "next": ["SWRuneScanAutoSell"],
+    "on_error": ["SWRuneOpenStorage"]
+  },
+  "SWRuneOpenStorage": {
+    "action": "Click",
+    "target": [850, 660],
+    "post_delay": 600,
+    "next": ["SWRuneStoragePage"]
+  },
+  "SWRuneStoragePage": {
+    "recognition": "OCR",
+    "roi": [430, 0, 420, 65],
+    "expected": "魔灵",
+    "threshold": 0.2,
+    "next": ["SWRuneOpenTab"]
+  },
+  "SWRuneOpenTab": {
+    "action": "Click",
+    "target": [710, 355],
+    "post_delay": 600,
+    "next": ["SWRuneOpenManage"]
+  },
+  "SWRuneOpenManage": {
+    "action": "Click",
+    "target": [1110, 510],
+    "post_delay": 800,
+    "next": ["SWRuneManagePage"]
+  },
+  "SWRuneManagePage": {
+    "recognition": "OCR",
+    "roi": [760, 0, 420, 65],
+    "expected": "符文管理",
+    "threshold": 0.2,
+    "next": ["SWRuneDisableEquipped"]
+  },
+  "SWRuneDisableEquipped": {
+    "action": "Click",
+    "target": [598, 367],
+    "post_delay": 250,
+    "next": ["SWRuneDisableEquippedCheckbox"]
+  },
+  "SWRuneDisableEquippedCheckbox": {
+    "action": "Click",
+    "target": [692, 42],
+    "post_delay": 150,
+    "next": ["SWRuneDisableEquippedConfirm"]
+  },
+  "SWRuneDisableEquippedConfirm": {
+    "action": "Click",
+    "target": [820, 660],
+    "post_delay": 500,
+    "next": ["SWRuneScanPreview"]
+  },
+  "SWRuneScanPreview": {
+    "recognition": "DirectHit",
+    "action": "Custom",
+    "custom_action": "scan_rune_inventory",
+    "custom_action_param": {"dry_run": true, "upgrade": false, "max_pages": 100},
+    "focus": {"Node.Action.Succeeded": "符文筛选预览完成"},
+    "timeout": 3600000
+  },
+  "SWRuneScanAutoSell": {
+    "recognition": "DirectHit",
+    "action": "Custom",
+    "custom_action": "scan_rune_inventory",
+    "custom_action_param": {"dry_run": false, "upgrade": true, "max_pages": 100},
+    "focus": {"Node.Action.Succeeded": "符文自动出售完成"},
+    "timeout": 3600000
+  },
+  "SWRuneDetailTitle": {
+    "recognition": "OCR",
+    "roi": [830, 10, 430, 55],
+    "expected": "符文\\s*[（(][1-6][）)]",
+    "threshold": 0.2,
+    "only_rec": false
+  },
+  "SWRuneDetailBody": {
+    "recognition": "OCR",
+    "roi": [740, 65, 525, 280],
+    "threshold": 0.2,
+    "only_rec": false
+  },
+  "SWRuneGemmedMarker": {
+    "recognition": "TemplateMatch",
+    "roi": [900, 145, 120, 145],
+    "template": "rune/gemmed_marker.png",
+    "threshold": 0.75
+  },
+  "SWRuneInventoryReady": {
+    "recognition": "OCR",
+    "roi": [760, 0, 420, 65],
+    "expected": "符文管理",
+    "threshold": 0.2,
+    "only_rec": false
+  },
+  "SWRuneInventoryControlsReady": {
+    "recognition": "OCR",
+    "roi": [790, 55, 190, 100],
+    "expected": "主属性",
+    "threshold": 0.2,
+    "only_rec": false,
+    "rate_limit": 300,
+    "timeout": 3000
+  },
+  "SWRuneInventoryGridReady": {
+    "recognition": "OCR",
+    "roi": [650, 330, 250, 75],
+    "expected": ["分数顺序", "强化度", "获得顺序"],
+    "threshold": 0.2,
+    "only_rec": false,
+    "rate_limit": 300,
+    "timeout": 3000
+  },
+  "SWRuneRefreshScreen": {
+    "recognition": "DirectHit"
+  },
+  "SWRuneHumanClick": {
+    "recognition": "DirectHit",
+    "action": "Click",
+    "target": [640, 360],
+    "post_delay": 300
+  },
+  "SWRuneScrollNextPage": {
+    "recognition": "DirectHit",
+    "action": "Swipe",
+    "begin": [900, 660],
+    "end": [900, 405],
+    "duration": 650,
+    "post_delay": 750
+  },
+  "SWRuneSellConfirmButton": {
+    "recognition": "OCR",
+    "roi": [470, 390, 180, 67],
+    "expected": ["是", "确定", "确认", "出售"],
+    "threshold": 0.2,
+    "only_rec": false,
+    "rate_limit": 300,
+    "timeout": 2000
+  },
+  "SWRuneLegendSellWarning": {
+    "recognition": "OCR",
+    "roi": [300, 140, 680, 300],
+    "expected": ["今日不再提示", "完成的符文"],
+    "threshold": 0.2,
+    "only_rec": false,
+    "rate_limit": 300,
+    "timeout": 1800
+  },
+  "SWRuneLegendSellConfirmButton": {
+    "recognition": "OCR",
+    "roi": [470, 445, 180, 75],
+    "expected": ["是", "确定", "确认", "出售"],
+    "threshold": 0.2,
+    "only_rec": false,
+    "rate_limit": 300,
+    "timeout": 2000
+  },
+  "SWRuneUpgradeButton": {
+    "recognition": "OCR",
+    "roi": [1090, 205, 155, 75],
+    "expected": ["强化", "升级"],
+    "threshold": 0.2,
+    "only_rec": false
+  },
+  "SWRuneUpgradePage": {
+    "recognition": "OCR",
+    "roi": [450, 0, 380, 110],
+    "expected": "符文强化",
+    "threshold": 0.2,
+    "only_rec": false
+  },
+  "SWRuneUpgradeExecuteButton": {
+    "recognition": "OCR",
+    "roi": [350, 520, 260, 100],
+    "expected": "强化",
+    "threshold": 0.2,
+    "only_rec": false
+  },
+  "SWRuneUpgradeResultPage": {
+    "recognition": "OCR",
+    "roi": [480, 570, 190, 80],
+    "expected": "出售",
+    "threshold": 0.2,
+    "only_rec": false,
+    "rate_limit": 300,
+    "timeout": 5000
+  },
+  "SWRuneUpgradeResultConfirm": {
+    "recognition": "OCR",
+    "roi": [710, 560, 340, 100],
+    "expected": ["确定", "确认", "完成"],
+    "threshold": 0.2,
+    "only_rec": false,
+    "rate_limit": 300,
+    "timeout": 3000
+  },
+  "SWRuneUpgradeCloseButton": {
+    "recognition": "OCR",
+    "roi": [520, 620, 250, 90],
+    "expected": "关闭",
+    "threshold": 0.2,
+    "only_rec": false,
+    "rate_limit": 300,
+    "timeout": 3000
+  }
+}

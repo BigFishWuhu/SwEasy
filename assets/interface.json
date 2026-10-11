@@ -1,105 +1,360 @@
 {
-    // 本文件主要定义了通用 UI 的行为和显示内容
-    // 可参考文档和示例添加更多您需要的功能
-    // 文档：https://maafw.xyz/docs/3.3-ProjectInterfaceV2
-    // 示例：https://github.com/MaaXYZ/MaaFramework/blob/main/sample/interface.json
     "interface_version": 2,
-    "name": "MaaXXX",
-    "description": "这是一个使用 MaaFramework 创建的新项目。",
-    "contact": "QQ群: 123456789",
+    "name": "SwEasy",
+    "description": "魔灵召唤日常任务自动化工具",
+    "contact": "",
     "license": "MIT",
-    "welcome": "首次使用！欢迎使用 MAA!",
-    // 填写项目地址和版本号可实现自动更新功能
-    "github": "https://github.com/MaaXYZ/MaaPracticeBoilerplate",
-    "version": "1.0.0",
-    // Mirror酱为第三方分发服务，新项目默认关闭
-    // 若有需要请联系 Mirror酱 开通，直接自行开启是无法使用的
-    // "mirrorchyan_rid": "MaaXXX",
-    // "mirrorchyan_multiplatform": true,
+    "welcome": "请先启动 MuMu 模拟器，并通过 ADB 连接对应实例。",
+    "version": "0.1.0",
+    "github": "https://github.com/BigFishWuhu/SwEasy",
     "controller": [
         {
-            "name": "安卓端",
+            "name": "MuMu 模拟器",
             "type": "Adb",
-            "display_short_side": 720 // 默认缩放分辨率的短边长度
-        },
-        {
-            "name": "桌面端",
-            "type": "Win32",
-            "win32": {
-                "class_regex": ".*",
-                "window_regex": "Visual Studio",
-                // 截图及控制方式，请根据项目实际情况修改
-                // 文档: https://maafw.xyz/docs/2.4-ControlMethods
-                "screencap": "PrintWindow", // 截图方式
-                "mouse": "PostMessageWithCursorPos", // 鼠标控制方式
-                "keyboard": "PostMessageWithCursorPos" // 键盘控制方式
-            }
+            "display_short_side": 720
         }
     ],
     "resource": [
         {
-            "name": "官服",
+            "name": "国服中文",
             "path": [
                 "./resource"
-            ]
-        },
-        {
-            "name": "B 服",
-            "path": [
-                "./resource"
-                // "./resource_bilibili"
             ]
         }
     ],
-    // 可选的 agent 示例
-    // "agent": {
-    //     "child_exec": "python",
-    //     "child_args": [
-    //         "./agent/main.py"
-    //     ]
-    // },
+    "agent": {
+        "child_exec": "python",
+        "child_args": [
+            "./agent/main.py"
+        ]
+    },
     "task": [
         {
-            "name": "普通任务",
-            "entry": "MyTask1"
+            "name": "启动游戏",
+            "entry": "SWStartup"
         },
         {
-            "name": "选项任务",
-            "entry": "MyTask2",
+            "name": "打开连续战斗",
+            "entry": "SWOpenRepeatBattle"
+        },
+        {
+            "name": "配置连续战斗",
+            "entry": "SWOpenRepeatBattle",
             "option": [
-                "任务选项1"
+                "战斗区域"
             ]
         },
         {
-            "name": "参数任务",
-            "entry": "MyTask3",
-            "option": [
-                "任务选项1"
-            ],
-            "pipeline_override": {}
+            "name": "启动/重启符文筛选网页",
+            "entry": "SWRuneOpenWeb"
         },
         {
-            "name": "自定义识别与动作示例",
-            "entry": "FindSmallestNumber"
+            "name": "预览仓库筛选结果",
+            "entry": "SWRuneStartPreview"
+        },
+        {
+            "name": "仓库符文自动出售",
+            "entry": "SWRuneStartAutoSell",
+            "pipeline_override": {
+                "SWRuneDisableEquippedConfirm": {
+                    "next": [
+                        "SWRuneScanAutoSell"
+                    ]
+                }
+            }
         }
     ],
     "option": {
-        "任务选项1": {
+        "战斗区域": {
             "type": "select",
+            "label": "战斗区域",
+            "default_case": "卡伊洛斯地下城",
             "cases": [
                 {
-                    "name": "文本1",
+                    "name": "卡伊洛斯地下城",
+                    "option": [
+                        "卡伊洛斯地下城",
+                        "卡伊洛斯层数"
+                    ],
                     "pipeline_override": {
-                        "OcrTask": {
-                            "text": "文本1"
+                        "SWRepeatBattlePage": {
+                            "next": [
+                                "SWCairosOpenRoot"
+                            ]
                         }
                     }
                 },
                 {
-                    "name": "文本2",
+                    "name": "次元洞口",
+                    "option": [
+                        "次元区域",
+                        "次元难度"
+                    ],
                     "pipeline_override": {
-                        "OcrTask": {
-                            "text": "文本2"
+                        "SWRepeatBattlePage": {
+                            "next": [
+                                "SWDimensionOpenRoot"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "卡伊洛斯地下城": {
+            "type": "select",
+            "label": "地下城",
+            "default_case": "巨人地下城",
+            "cases": [
+                {
+                    "name": "巨人地下城",
+                    "pipeline_override": {
+                        "SWCairosSelectDungeon": {
+                            "template": "selection/cairos/dungeon/giant_selected.png"
+                        }
+                    }
+                },
+                {
+                    "name": "龙之地下城",
+                    "pipeline_override": {
+                        "SWCairosSelectDungeon": {
+                            "template": "selection/cairos/dungeon/dragon.png"
+                        }
+                    }
+                },
+                {
+                    "name": "死亡地下城",
+                    "pipeline_override": {
+                        "SWCairosSelectDungeon": {
+                            "template": "selection/cairos/dungeon/necropolis.png"
+                        }
+                    }
+                },
+                {
+                    "name": "精灵地下城",
+                    "pipeline_override": {
+                        "SWCairosSelectDungeon": {
+                            "template": "selection/cairos/dungeon/spiritual.png"
+                        }
+                    }
+                },
+                {
+                    "name": "钢铁地下城",
+                    "pipeline_override": {
+                        "SWCairosSelectDungeon": {
+                            "template": "selection/cairos/dungeon/steel.png"
+                        }
+                    }
+                },
+                {
+                    "name": "审判地下城",
+                    "pipeline_override": {
+                        "SWCairosSelectDungeon": {
+                            "template": "selection/cairos/dungeon/punisher.png"
+                        }
+                    }
+                }
+            ]
+        },
+        "卡伊洛斯层数": {
+            "type": "select",
+            "label": "层数",
+            "default_case": "地下10层",
+            "cases": [
+                {
+                    "name": "地下1层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b1.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下2层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b2.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下3层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b3.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下4层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b4.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下5层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b5.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下6层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b6.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下7层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b7.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下8层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b8.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下9层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b9.png"
+                        }
+                    }
+                },
+                {
+                    "name": "地下10层",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/b10.png"
+                        }
+                    }
+                },
+                {
+                    "name": "深渊普通",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/abyss_normal.png"
+                        }
+                    }
+                },
+                {
+                    "name": "深渊困难",
+                    "pipeline_override": {
+                        "SWCairosSelectFloor": {
+                            "template": "selection/cairos/floor/abyss_hard.png"
+                        }
+                    }
+                }
+            ]
+        },
+        "次元区域": {
+            "type": "select",
+            "label": "次元区域",
+            "default_case": "卡勒赞",
+            "cases": [
+                {
+                    "name": "卡勒赞",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/karzhan.png"
+                        }
+                    }
+                },
+                {
+                    "name": "艾鲁尼亚",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/ellunia.png"
+                        }
+                    }
+                },
+                {
+                    "name": "拉莫",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/lumel.png"
+                        }
+                    }
+                },
+                {
+                    "name": "卡尔德隆",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/khalderun.png"
+                        }
+                    }
+                },
+                {
+                    "name": "塞克里翁",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/sacreon.png"
+                        }
+                    }
+                },
+                {
+                    "name": "焰焚炼狱",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/hell.png"
+                        }
+                    }
+                }
+            ]
+        },
+        "次元难度": {
+            "type": "select",
+            "label": "难度",
+            "default_case": "阶段5",
+            "cases": [
+                {
+                    "name": "阶段1",
+                    "pipeline_override": {
+                        "SWDimensionSelectStage": {
+                            "template": "selection/dimension/stage_key/s1.png"
+                        }
+                    }
+                },
+                {
+                    "name": "阶段2",
+                    "pipeline_override": {
+                        "SWDimensionSelectStage": {
+                            "template": "selection/dimension/stage_key/s2.png"
+                        }
+                    }
+                },
+                {
+                    "name": "阶段3",
+                    "pipeline_override": {
+                        "SWDimensionSelectStage": {
+                            "template": "selection/dimension/stage_key/s3.png"
+                        }
+                    }
+                },
+                {
+                    "name": "阶段4",
+                    "pipeline_override": {
+                        "SWDimensionSelectStage": {
+                            "template": "selection/dimension/stage_key/s4.png"
+                        }
+                    }
+                },
+                {
+                    "name": "阶段5",
+                    "pipeline_override": {
+                        "SWDimensionSelectStage": {
+                            "template": "selection/dimension/stage_key/s5.png"
                         }
                     }
                 }

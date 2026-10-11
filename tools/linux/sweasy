@@ -1,0 +1,21 @@
+#!/bin/sh
+set -eu
+source_dir=/opt/sweasy
+app_dir="${XDG_DATA_HOME:-$HOME/.local/share}/sweasy"
+mkdir -p "$app_dir"
+exec 9>"$app_dir/.package-sync.lock"
+flock 9
+if ! cmp -s "$source_dir/interface.json" "$app_dir/.package-interface.json"; then
+    for entry in "$source_dir"/*; do
+        case "$(basename "$entry")" in
+            config|debug) continue ;;
+        esac
+        cp -a "$entry" "$app_dir/"
+    done
+    cp "$source_dir/interface.json" "$app_dir/.package-interface.json"
+fi
+flock -u 9
+exec 9>&-
+cd "$app_dir"
+export LD_LIBRARY_PATH="$app_dir/maafw${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+exec ./mxu "$@"

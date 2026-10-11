@@ -1,0 +1,207 @@
+{
+    "SWStartup": {
+        "action": "StartApp",
+        "package": "com.com2us.smon.normal.freefull.google.kr.android.common",
+        "post_delay": 1000,
+        "next": [
+            "SWHome",
+            "SWHiveAdClose",
+            "SWInboxClose",
+            "SWShopClose",
+            "SWLoginStart"
+        ],
+        "timeout": 90000,
+        "on_error": [
+            "SWStartupFailed"
+        ]
+    },
+    "SWHome": {
+        "recognition": "TemplateMatch",
+        "template": "home/battle_button.png",
+        "roi": [650, 580, 150, 140],
+        "threshold": 0.82,
+        "focus": {
+            "Node.Action.Succeeded": "已进入庭院"
+        }
+    },
+    "SWHiveAdClose": {
+        "recognition": "TemplateMatch",
+        "template": "startup/hive_ad_close.png",
+        "roi": [900, 500, 120, 120],
+        "threshold": 0.85,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "SWHome",
+            "SWHiveAdClose",
+            "SWInboxClose",
+            "SWShopClose",
+            "SWLoginStart"
+        ],
+        "timeout": 90000
+    },
+    "SWInboxClose": {
+        "recognition": "TemplateMatch",
+        "template": "common/inbox_close.png",
+        "roi": [1080, 55, 140, 130],
+        "threshold": 0.85,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "SWHome",
+            "SWHiveAdClose",
+            "SWInboxClose",
+            "SWShopClose",
+            "SWLoginStart"
+        ],
+        "timeout": 90000
+    },
+    "SWShopClose": {
+        "recognition": "TemplateMatch",
+        "template": "common/shop_close.png",
+        "roi": [1190, 35, 90, 100],
+        "threshold": 0.85,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "SWHome",
+            "SWHiveAdClose",
+            "SWInboxClose",
+            "SWShopClose",
+            "SWLoginStart"
+        ],
+        "timeout": 90000
+    },
+    "SWLoginStart": {
+        "recognition": "TemplateMatch",
+        "template": "startup/tap_to_start.png",
+        "roi": [500, 550, 280, 120],
+        "threshold": 0.8,
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "SWHome",
+            "SWHiveAdClose",
+            "SWInboxClose",
+            "SWShopClose",
+            "SWLoginStart"
+        ],
+        "timeout": 90000
+    },
+    "SWStartupFailed": {
+        "action": "StopTask",
+        "focus": {
+            "Node.Action.Starting": {
+                "content": "启动超时：未识别到庭院或已知弹窗",
+                "display": [
+                    "log",
+                    "toast"
+                ],
+                "trace": true
+            }
+        }
+    },
+    "SWOpenRepeatBattle": {
+        "next": [
+            "SWRepeatBattlePage",
+            "SWRepeatHiveAdClose",
+            "SWRepeatInboxClose",
+            "SWRepeatShopClose",
+            "SWRepeatBattleEntryButton",
+            "SWRepeatBattleBuilding"
+        ],
+        "timeout": 30000
+    },
+    "SWRepeatHiveAdClose": {
+        "recognition": "TemplateMatch",
+        "template": "startup/hive_ad_close.png",
+        "roi": [900, 500, 120, 120],
+        "threshold": 0.85,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "SWRepeatBattlePage",
+            "SWRepeatHiveAdClose",
+            "SWRepeatInboxClose",
+            "SWRepeatShopClose",
+            "SWRepeatBattleEntryButton",
+            "SWRepeatBattleBuilding"
+        ],
+        "timeout": 30000
+    },
+    "SWRepeatInboxClose": {
+        "recognition": "TemplateMatch",
+        "template": "common/inbox_close.png",
+        "roi": [1080, 55, 140, 130],
+        "threshold": 0.85,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "SWRepeatBattlePage",
+            "SWRepeatHiveAdClose",
+            "SWRepeatInboxClose",
+            "SWRepeatShopClose",
+            "SWRepeatBattleEntryButton",
+            "SWRepeatBattleBuilding"
+        ],
+        "timeout": 30000
+    },
+    "SWRepeatShopClose": {
+        "recognition": "TemplateMatch",
+        "template": "common/shop_close.png",
+        "roi": [1190, 35, 90, 100],
+        "threshold": 0.85,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "SWRepeatBattlePage",
+            "SWRepeatHiveAdClose",
+            "SWRepeatInboxClose",
+            "SWRepeatShopClose",
+            "SWRepeatBattleEntryButton",
+            "SWRepeatBattleBuilding"
+        ],
+        "timeout": 30000
+    },
+    "SWRepeatBattleBuilding": {
+        "recognition": "TemplateMatch",
+        "template": "repeat_battle/building_base.png",
+        "roi": [500, 260, 250, 160],
+        "threshold": 0.84,
+        "action": "Click",
+        "target_offset": [35, -36, -70, -40],
+        "post_delay": 500,
+        "next": [
+            "SWRepeatBattlePage",
+            "SWRepeatHiveAdClose",
+            "SWRepeatInboxClose",
+            "SWRepeatShopClose",
+            "SWRepeatBattleEntryButton"
+        ],
+        "timeout": 10000
+    },
+    "SWRepeatBattleEntryButton": {
+        "recognition": "TemplateMatch",
+        "template": "repeat_battle/entry_button.png",
+        "roi": [500, 560, 180, 160],
+        "threshold": 0.88,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "SWRepeatBattlePage",
+            "SWRepeatHiveAdClose",
+            "SWRepeatInboxClose",
+            "SWRepeatShopClose"
+        ],
+        "timeout": 10000
+    },
+    "SWRepeatBattlePage": {
+        "recognition": "TemplateMatch",
+        "template": "repeat_battle/page_title.png",
+        "roi": [50, 50, 260, 100],
+        "threshold": 0.88,
+        "focus": {
+            "Node.Action.Succeeded": "已打开连续战斗"
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SwEasy 符文筛选</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">S</span><div><strong>SwEasy</strong><small>符文仓库筛选器</small></div></div>
+    <div class="top-actions"><span id="status" class="status">读取配置中</span><button id="restart-web" class="ghost">重启网页服务</button><button id="save" class="primary">保存规则</button></div>
+  </header>
+  <main class="shell">
+    <section class="intro">
+      <div><p class="eyebrow">LOCAL RULE WORKBENCH</p><h1>把仓库整理成可执行的规则。</h1><p class="lede">按优先级匹配规则，预览效率，确认后由 Maa 自动出售明确命中的符文。</p></div>
+      <div class="metric"><span id="rule-count">0</span><small>个启用规则组</small></div>
+    </section>
+    <section class="workspace">
+      <aside class="rules-panel"><div class="panel-head"><div><span class="section-kicker">RULE GROUPS</span><h2>规则组顺序</h2></div><button id="add-rule" class="icon-btn" title="新增规则组">＋</button></div><div id="rules" class="rule-list"></div><div class="fallback"><label for="fallback">未命中规则组</label><select id="fallback"><option value="keep">保留</option><option value="sell">出售</option></select></div></aside>
+      <section class="editor-panel"><div class="panel-head"><div><span class="section-kicker">GROUP EDITOR</span><h2 id="editor-title">选择一个规则组</h2></div><button id="delete-rule" class="ghost danger">删除规则组</button></div><div id="editor" class="editor-empty">从左侧选择规则组，开始编辑筛选条件。</div></section>
+      <aside class="preview-panel"><div class="panel-head"><div><span class="section-kicker">SIMULATION</span><h2>单件试算</h2></div><span class="chip">SWEX 1.2.1</span></div><p class="muted">粘贴一个符文对象，检查效率与规则判定。仓库扫描使用同一套引擎。</p><textarea id="rune-input" spellcheck="false"></textarea><button id="evaluate" class="secondary">计算并判定</button><div id="result" class="result idle">等待试算</div></aside>
+    </section>
+    <section class="account-preview">
+      <div class="panel-head"><div><span class="section-kicker">ACCOUNT JSON</span><h2>账号符文快速预览</h2></div><label class="file-button" for="account-file">选择或更新 JSON</label><input id="account-file" type="file" accept=".json,application/json" hidden></div>
+      <div class="account-controls"><button id="preview-account" class="secondary" disabled>分析账号</button><span id="account-file-name" class="muted">尚未选择文件</span></div>
+      <div id="account-result" class="account-result empty">选择 SWEX / SWKit 账号 JSON 后显示规则预览。分析包含仓库与已装备符文，已装备状态会单独标注。</div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

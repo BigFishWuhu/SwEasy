@@ -452,3 +452,15 @@ tools/ImageCropper/**/*.png
 
 config
 debug
+/web/runtime.json
+/web/runtime.json.tmp
+
+# Private account exports and release downloads
+/forodo-*.json
+/account-*.json
+/.python-build/
+/MXU/
+/dist/
+/.venv/
+*.sqlite3-wal
+*.sqlite3-shm

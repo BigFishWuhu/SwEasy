@@ -3,8 +3,15 @@ import sys
 from maa.agent.agent_server import AgentServer
 from maa.toolkit import Toolkit
 
-import my_action
-import my_reco
+try:
+    from . import my_action, my_reco, web_action
+    from .rune import scanner
+except ImportError:
+    # ``main.py`` is also launched directly by Maa's child_exec command.
+    import my_action
+    import my_reco
+    import web_action
+    from rune import scanner
 
 
 def main():

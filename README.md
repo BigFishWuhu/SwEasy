@@ -73,6 +73,8 @@ Web 服务启动或重启后会在 Maa/终端的启动任务日志中明确打�
 
 识别失败、已装备、已锁定或出售确认无法识别时会跳过或停止，不会按兜底策略出售。效率计算兼容公开 SWEX Rune Card 插件，分别显示 `Current`、`Max`、`Hero Grinded` 和 `Legend Grinded`；现有规则中的 `maxWithGrind` 对应 `Legend Grinded`。
 
+符文扫描在每次界面识别前显式请求并等待新截图，不使用 `DirectHit` 节点留下的旧截图缓存；截图失败或为空时停止任务，避免误判符文未打开、确认框已关闭等状态。点击、翻页及强化/出售确认仍保留原有随机偏移、等待和状态验证。
+
 账号 JSON 导入兼容 SWEX/SWKit 常见结构：读取顶层 `runes` 和魔灵 `unit_list[].runes`，解析 `rank/class/set_id/slot_no/pri_eff/prefix_eff/sec_eff/upgrade_curr`，并识别已装备、锁定、远古和品质。`set_id=13` 为暴走，不能把 `extra` 当作品质字段。
 
 账号预览还会统计副属性未精炼速度阶梯，累计显示 30+、25+、20+ 的全部数量、关键套装数量、散件候选数量和逐套装明细；磨炼增加的速度不会计入该统计。

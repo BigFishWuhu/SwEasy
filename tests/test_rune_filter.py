@@ -2647,7 +2647,9 @@ class RuneScannerTests(unittest.TestCase):
                 action=SimpleNamespace(success=True),
             )],
         )
-        controller = SimpleNamespace(cached_image=object())
+        image = object()
+        screenshot = SimpleNamespace(succeeded=True, get=Mock(return_value=image))
+        controller = SimpleNamespace(post_screencap=Mock(return_value=SimpleNamespace(wait=Mock(return_value=screenshot))))
         context = SimpleNamespace(
             run_task=Mock(return_value=refresh),
             run_recognition=Mock(return_value=miss),
@@ -2656,7 +2658,29 @@ class RuneScannerTests(unittest.TestCase):
 
         self.assertIs(rune_scanner._live_recognition(context, "OptionalState"), miss)
         context.run_task.assert_called_once_with("SWRuneRefreshScreen")
-        context.run_recognition.assert_called_once_with("OptionalState", controller.cached_image)
+        controller.post_screencap.assert_called_once_with()
+        context.run_recognition.assert_called_once_with("OptionalState", image)
+
+    def test_live_recognition_never_uses_cached_image_after_screenshot_failure(self):
+        completed = SimpleNamespace(status=SimpleNamespace(succeeded=True), nodes=[SimpleNamespace(name="SWRuneRefreshScreen", completed=True, action=SimpleNamespace(success=True))])
+        for succeeded, image in ((False, object()), (True, None)):
+            screenshot = SimpleNamespace(succeeded=succeeded, get=Mock(return_value=image))
+            controller = SimpleNamespace(cached_image=object(), post_screencap=Mock(return_value=SimpleNamespace(wait=Mock(return_value=screenshot))))
+            context = SimpleNamespace(run_task=Mock(return_value=completed), tasker=SimpleNamespace(controller=controller), run_recognition=Mock())
+            with self.subTest(succeeded=succeeded), self.assertRaises(rune_scanner._InteractionStopped):
+                rune_scanner._live_recognition(context, "OptionalState")
+            context.run_recognition.assert_not_called()
+
+    def test_live_recognition_requests_a_new_frame_for_every_probe(self):
+        completed = SimpleNamespace(status=SimpleNamespace(succeeded=True), nodes=[SimpleNamespace(name="SWRuneRefreshScreen", completed=True, action=SimpleNamespace(success=True))])
+        before, after = object(), object()
+        screenshot = SimpleNamespace(succeeded=True, get=Mock(side_effect=[before, after]))
+        controller = SimpleNamespace(cached_image=object(), post_screencap=Mock(return_value=SimpleNamespace(wait=Mock(return_value=screenshot))))
+        context = SimpleNamespace(run_task=Mock(return_value=completed), tasker=SimpleNamespace(controller=controller), run_recognition=Mock())
+        rune_scanner._live_recognition(context, "BeforeClick")
+        rune_scanner._live_recognition(context, "AfterClick")
+        self.assertEqual(controller.post_screencap.call_count, 2)
+        self.assertEqual(context.run_recognition.call_args_list, [call("BeforeClick", before), call("AfterClick", after)])
 
     def test_live_recognition_stops_when_refresh_has_no_executed_node(self):
         stopped = SimpleNamespace(

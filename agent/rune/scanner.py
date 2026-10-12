@@ -125,16 +125,22 @@ def _live_recognition(context: Context, name: str) -> Any:
     ``Context.run_task`` treats an OCR miss as a failed nested task. Maa then
     cancels later context calls in the same custom action, which is unsuitable
     for optional UI states such as the legend-sale warning. A DirectHit refresh
-    obtains a current frame successfully; ``run_recognition`` reports misses
+    checks that the task is still active; an explicit screencap obtains a fresh
+    frame because DirectHit does not refresh the cache. ``run_recognition`` reports misses
     through ``detail.hit`` without changing the parent task state.
     """
     refresh = context.run_task("SWRuneRefreshScreen")
     if not _task_action_completed(refresh, "SWRuneRefreshScreen"):
         raise _InteractionStopped("Maa 已停止任务，屏幕刷新未实际执行")
     try:
-        image = context.tasker.controller.cached_image
-    except RuntimeError:
-        return None
+        screenshot = context.tasker.controller.post_screencap().wait()
+    except RuntimeError as exc:
+        raise _InteractionStopped("Maa 截图异常，停止识别以避免使用旧画面") from exc
+    if not screenshot.succeeded:
+        raise _InteractionStopped("Maa 截图失败，停止识别以避免使用旧画面")
+    image = screenshot.get()
+    if image is None:
+        raise _InteractionStopped("Maa 截图为空，停止识别以避免使用旧画面")
     return context.run_recognition(name, image)
 
 
@@ -630,7 +636,7 @@ def _close_detail_if_open(context: Context) -> None:
 @AgentServer.custom_action("scan_rune_inventory")
 class RuneInventoryScanner(CustomAction):
     def run(self, context: Context, argv: CustomAction.RunArg) -> bool:
-        print("[rune] scan action started", flush=True)
+        print("[rune] scan action started (fresh screenshot recognition)", flush=True)
         try:
             return self._run(context, argv)
         except _InteractionStopped as exc:

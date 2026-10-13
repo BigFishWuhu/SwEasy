@@ -1,0 +1,34 @@
+{
+    "SWAwakeningSelectEntry": {
+        "action": "Custom",
+        "custom_action": "select_awakening_entry",
+        "custom_action_param": {"region": "卡勒赞", "family": "犬神"},
+        "next": ["SWDimensionResetStageList"]
+    },
+    "SWAwakeningRegionTitle": {
+        "recognition": "OCR",
+        "roi": [520, 40, 240, 55],
+        "expected": "卡勒赞",
+        "threshold": 0.8
+    },
+    "SWAwakeningFamily": {
+        "recognition": "OCR",
+        "roi": [270, 205, 190, 460],
+        "expected": "犬神$",
+        "threshold": 0.8
+    },
+    "SWAwakeningSelected": {
+        "recognition": "TemplateMatch",
+        "template": "selection/dimension/selected_arrow.png",
+        "roi": [483, 205, 34, 460],
+        "threshold": 0.85
+    },
+    "SWAwakeningRefresh": {},
+    "SWAwakeningClick": {"action": "Click", "target": [350, 380]},
+    "SWAwakeningSwipe": {
+        "action": "Swipe",
+        "begin": [350, 595],
+        "end": [350, 280],
+        "duration": 750
+    }
+}

@@ -39,5 +39,8 @@
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
     },
-    "maa.controller.connectOnStartup": true
+    "maa.controller.connectOnStartup": true,
+    "terminal.integrated.env.windows": {
+        "PATH": "${workspaceFolder}\\.venv\\Scripts;${env:PATH}"
+    }
 }

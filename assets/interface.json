@@ -25,7 +25,7 @@
     "agent": {
         "child_exec": "python",
         "child_args": [
-            "./agent/main.py"
+            "../agent/main.py"
         ]
     },
     "task": [
@@ -95,6 +95,279 @@
                             "next": [
                                 "SWDimensionOpenRoot"
                             ]
+                        }
+                    }
+                },
+                {
+                    "name": "二次觉醒",
+                    "option": ["二觉魔灵", "次元难度", "二觉选图后操作"],
+                    "pipeline_override": {
+                        "SWRepeatBattlePage": {"next": ["SWDimensionOpenRoot"]},
+                        "SWDimensionSelectRegion": {"next": ["SWAwakeningSelectEntry"]}
+                    }
+                }
+            ]
+        },
+        "二觉选图后操作": {
+            "type": "select",
+            "label": "选图后操作",
+            "default_case": "连续战斗",
+            "cases": [
+                {
+                    "name": "连续战斗",
+                    "pipeline_override": {
+                        "SWSelectionTeamReady": {
+                            "next": ["SWAwakeningBattle"],
+                            "focus": {"Node.Action.Succeeded": "已选择二觉目标，准备30次连续战斗"}
+                        }
+                    }
+                },
+                {
+                    "name": "仅配置队伍",
+                    "pipeline_override": {"SWSelectionTeamReady": {"next": []}}
+                }
+            ]
+        },
+        "二觉魔灵": {
+            "type": "select",
+            "label": "二觉魔灵",
+            "default_case": "犬神（卡勒赞）",
+            "cases": [
+                {
+                    "name": "犬神（卡勒赞）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/karzhan.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "卡勒赞",
+                                "family": "犬神"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "格里芬（卡勒赞）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/karzhan.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "卡勒赞",
+                                "family": "格里芬"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "战斗之熊（卡勒赞）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/karzhan.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "卡勒赞",
+                                "family": "战斗之熊"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "最高元素（艾鲁尼亚）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/ellunia.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "艾鲁尼亚",
+                                "family": "最高元素"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "仙女（艾鲁尼亚）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/ellunia.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "艾鲁尼亚",
+                                "family": "仙女"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "小仙子（艾鲁尼亚）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/ellunia.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "艾鲁尼亚",
+                                "family": "小仙子"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "哈勒普（拉莫）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/lumel.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "拉莫",
+                                "family": "哈勒普"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "狼人（拉莫）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/lumel.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "拉莫",
+                                "family": "狼人"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "功夫猫（拉莫）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/lumel.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "拉莫",
+                                "family": "功夫猫"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "亡灵铠甲（卡尔德隆）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/khalderun.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "卡尔德隆",
+                                "family": "亡灵铠甲"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "弗兰肯（卡尔德隆）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/khalderun.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "卡尔德隆",
+                                "family": "弗兰肯"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "霍尔（卡尔德隆）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/khalderun.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "卡尔德隆",
+                                "family": "霍尔"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "影子收割者（卡尔德隆）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/khalderun.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "卡尔德隆",
+                                "family": "影子收割者"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "流浪骑士（塞克里翁）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/sacreon.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "塞克里翁",
+                                "family": "流浪骑士"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "神秘女巫（塞克里翁）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/sacreon.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "塞克里翁",
+                                "family": "神秘女巫"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "地狱之火（焰焚炼狱）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/hell.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "焰焚炼狱",
+                                "family": "地狱之火"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "地狱犬（焰焚炼狱）",
+                    "pipeline_override": {
+                        "SWDimensionSelectRegion": {
+                            "template": "selection/dimension/region/hell.png"
+                        },
+                        "SWAwakeningSelectEntry": {
+                            "custom_action_param": {
+                                "region": "焰焚炼狱",
+                                "family": "地狱犬"
+                            }
                         }
                     }
                 }

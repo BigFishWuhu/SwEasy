@@ -1,0 +1,54 @@
+{
+    "SWAwakeningBattle": {
+        "action": "Custom",
+        "custom_action": "awakening_battle"
+    },
+    "SWAwakeningPoll": {"post_delay": 500},
+    "SWAwakeningThirtyLabel": {
+        "recognition": "OCR",
+        "roi": [1040, 432, 185, 49],
+        "expected": "30次连续战斗"
+    },
+    "SWAwakeningThirtyChecked": {
+        "recognition": "TemplateMatch",
+        "template": "selection/dimension/repeat_checked.png",
+        "roi": [982, 424, 66, 61],
+        "threshold": 0.9
+    },
+    "SWAwakeningStart": {
+        "recognition": "OCR",
+        "roi": [1010, 540, 215, 48],
+        "expected": "^连续战斗$"
+    },
+    "SWAwakeningRunning": {
+        "recognition": "OCR",
+        "roi": [510, 590, 270, 66],
+        "expected": "^结束连续战斗$"
+    },
+    "SWAwakeningResult": {
+        "recognition": "OCR",
+        "roi": [305, 208, 240, 51],
+        "expected": "^连续战斗结果$"
+    },
+    "SWAwakeningEndReason": {
+        "recognition": "OCR",
+        "roi": [83, 468, 690, 90]
+    },
+    "SWAwakeningCount": {
+        "recognition": "OCR",
+        "roi": [56, 146, 238, 48]
+    },
+    "SWAwakeningRoundResult": {
+        "recognition": "OCR",
+        "roi": [355, 231, 143, 52]
+    },
+    "SWAwakeningExperience": {
+        "recognition": "OCR",
+        "roi": [137, 264, 113, 45]
+    },
+    "SWAwakeningAgain": {
+        "recognition": "OCR",
+        "roi": [587, 594, 192, 57],
+        "expected": "^再来一次$"
+    }
+}
